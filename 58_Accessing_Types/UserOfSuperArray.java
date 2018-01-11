@@ -70,5 +70,10 @@ public class UserOfSuperArray {
         bravo.add( new Integer( i)); // Construct a newly-allocated Integer
         System.out.println( "Equal integers are equivalent: "
                            + alpha.equals( bravo));
+        alpha.add(new Integer (5));
+        bravo.add(new Integer (6));
+        System.out.println( "Different integers are equal: "
+                           + alpha.equals( bravo));
     }
+    
 }

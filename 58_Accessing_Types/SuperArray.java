@@ -96,11 +96,13 @@ public class SuperArray {
                         return false;
                     }
                 }
+                else if (! this._data[y].equals(other._data[y])) {
+                    return false;
+                }
                 return true;
             }
         }
         return false;
-        // The SuperArray.equals method doesn't use default processing for elements that are neither Strings, nor Doubles.
     }
     
 }
