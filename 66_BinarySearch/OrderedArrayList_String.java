@@ -14,30 +14,32 @@ public class OrderedArrayList_String  {
       in this list, or -1 if this list does not contain @findMe.
      */
     public int index(Object findMe) {
-
         String value = (String) findMe;
         int lower = 0;
         int index = arrayList.size() / 2;
         int upper = arrayList.size();
 
         while (arrayList.get(index) != value) {
-            if (value.compareTo(arrayList.get(index)) < 0) {
-                index = upper - index / 2;
+            if (lower == index) {
+                return -1;
+            }
+
+            else if (value.compareTo(arrayList.get(index)) < 0) {
                 upper = index;
+                index = (upper + lower) / 2;
             }
 
             else if (value.compareTo(arrayList.get(index)) > 0) {
-                index = lower + (upper - index) / 2;
                 lower = index;
+                index = (lower + upper) / 2;
             }
 
             else {
-                System.out.println("The object is nonexistant.");
+                System.out.println("ERROR IN CODE");
             }
         }
         
-        return index;
-        
+        return index;    
     }
     
     
@@ -47,21 +49,31 @@ public class OrderedArrayList_String  {
               ignoring null elements, and
               using the classic reigning champ algorithm
      */
-     private int champIndex( ArrayList<String> challengers) {
-        return challengers.size() - 1;  // placeholder, awaiting replacement
+     private int champIndex(ArrayList<String> challengers) {
+         String champ = "zzzzzzzzzz";
+         int place = -1;
+         for (int a = 0; a < challengers.size(); a++) {
+             if (challengers.get(a) != null && (challengers.get(a)).compareTo(champ) > 0) {
+                 champ = challengers.get(a);
+                 place = a;
+             }
+         }
+         return place;
      }
 
 
     /** 
       construct order from an unordered ArrayList
      */
-    public OrderedArrayList_String( ArrayList<String> unordered) {
-        this();  // placeholder, awaiting replacement
+    public OrderedArrayList_String(ArrayList<String> unordered) {
+        ArrayList<String> data = new ArrayList<String>();
 
-        // for incremental development: test champIndex
-        int nextLargerAt = champIndex( unordered);
-        System.out.println( "earliest name is at index " + nextLargerAt 
-                          + " and has the value " + unordered.get( nextLargerAt));
+        for (int b = 0; b < unordered.size(); b++) {
+            data.add(unordered.get(champIndex(unordered)));
+            unordered.remove(get(champIndex(unordered)));
+        }
+        
+        arrayList = data;
     }
     
     /* -------------------------------------------------------
@@ -89,13 +101,9 @@ public class OrderedArrayList_String  {
       Put @value where it belongs in the list.
       @pre: the list is in increasing order
      */
-     public void add( String value) {
+     public void add(String value) {
          int dest;
-         for( // declare dest before loop, since it is needed after the loop
-              dest = 0
-            ;    dest < arrayList.size() 
-              && arrayList.get( dest).compareTo( value) < 0
-            ; dest++) ;
+         for(dest = 0; dest < arrayList.size() && arrayList.get( dest).compareTo( value) < 0; dest++) ;
 
          System.out.println( "OAR adding " + value + " at index " + dest);
          arrayList.add( dest, value);
@@ -106,11 +114,11 @@ public class OrderedArrayList_String  {
       return arrayList.size();
     }
 
-    public String get( int index) {
+    public String get(int index) {
       return arrayList.get(index);
     }
 
-    public String remove( int index) {
+    public String remove(int index) {
       return arrayList.remove( index);
     }
 }
